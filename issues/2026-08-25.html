@@ -1,4 +1,5 @@
 <title>量化日報</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
@@ -122,9 +123,60 @@ h2.bar{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.2
 footer{border-top:1px solid var(--rule); background:var(--tint)}
 footer .wrap{padding:28px 24px 60px; font-size:.82rem; color:var(--ink-3)}
 footer p{margin:0 0 .55em; max-width:66ch}
+/* ---- 手機版（<=600px）----------------------------------------------------
+   桌機的設定直接搬到手機會壞在幾個地方，逐項處理：
+   - 左右 padding 24px 在 360px 螢幕上等於吃掉 13% 寬度
+   - 置中的長段落在窄欄很難讀（每行起點都不一樣）
+   - 出處連結的 flex 單行排版會把帳號、摘要、讚數擠爛
+   - 行高 1.85 在窄欄會讓一段話拉得很長
+   字級刻意不縮小——手機上 16px 已是可讀下限，再小就要放大才看得清。   */
 @media (max-width:600px){
-  .pt{grid-template-columns:1fr; gap:5px}
-  .flag .wrap{padding:26px 20px 18px}
+  body{line-height:1.75}
+  .wrap,.shell{padding:0 16px}
+
+  /* 報頭：字距在小螢幕會撐破，收掉一些 */
+  .flag .wrap{padding:24px 16px 16px}
+  .name{letter-spacing:.08em; text-indent:.08em}
+  .slug{font-size:.66rem; letter-spacing:.14em}
+
+  /* 導言改左對齊：置中在窄欄每行起點都不同，掃讀成本高 */
+  .stand .wrap{padding:16px}
+  .stand p{text-align:left; font-size:1rem}
+
+  main,.shell > main{padding:28px 0 56px}
+  .lead{margin-bottom:36px}
+  .lead .body{font-size:1rem}
+  blockquote.pull{margin:20px 0; padding:16px 18px}
+  blockquote.pull p{font-size:1.05rem}
+
+  h2.bar{margin-bottom:18px}
+  .points{gap:22px; margin-bottom:36px}
+  /* 編號改成行內標籤，不再佔一欄 */
+  .pt{grid-template-columns:1fr; gap:4px}
+  .pt .n{font-size:.7rem; padding-top:0}
+  .pt h3{font-size:1.05rem}
+
+  /* 出處連結改成兩行：上行帳號與摘要，下行互動數 */
+  .src a{flex-wrap:wrap; padding:8px 10px; row-gap:2px}
+  .src a span{flex:1 1 100%; order:2; line-height:1.5}
+  .src i{margin-left:0; order:3; flex:1 1 100%; font-size:.7rem}
+
+  .desk{padding:16px 18px; margin-bottom:36px}
+  .sec{margin-bottom:30px}
+  .qt{padding-left:12px}
+
+  /* 側欄：手機上排在內容之後，改成單行清單不換行 */
+  aside.past{padding:24px 0 48px}
+  aside.past a{padding:10px 8px}
+  aside.past span{-webkit-line-clamp:1}
+
+  footer .wrap{padding:22px 16px 48px}
+}
+
+/* 極窄螢幕（<=380px，例如 iPhone SE）：再收一次左右留白 */
+@media (max-width:380px){
+  .wrap,.shell{padding:0 13px}
+  .flag .wrap{padding:20px 13px 14px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
