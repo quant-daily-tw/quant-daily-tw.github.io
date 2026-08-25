@@ -35,7 +35,7 @@ a:focus-visible{outline:2px solid var(--red); outline-offset:3px; border-radius:
 
 /* 有往期側欄時改雙欄。沒有側欄的單篇輸出仍是置中單欄。 */
 .shell{max-width:1080px; margin:0 auto; padding:0 24px;
-  display:grid; grid-template-columns:minmax(0,1fr) 232px; gap:52px; align-items:start}
+  display:grid; grid-template-columns:232px minmax(0,1fr); gap:52px; align-items:start}
 .shell > main{padding:44px 0 80px}
 .shell .wrap{max-width:none; padding:0}
 aside.past{position:sticky; top:28px; padding:34px 0 0}
@@ -57,8 +57,11 @@ aside.past .note{font-family:"IBM Plex Mono",monospace; font-size:.68rem;
   color:var(--ink-3); margin:14px 0 0; padding-top:10px; border-top:1px solid var(--rule)}
 @media (max-width:900px){
   .shell{grid-template-columns:1fr; gap:0}
-  aside.past{position:static; padding:0 0 60px; border-top:1px solid var(--rule)}
-  aside.past ol{max-height:none}
+  /* 單欄時把往期排到內容之後：小螢幕上先看到一長串往期會擋住當期。
+     用 order 而非改 DOM 順序，桌機版的閱讀順序（側欄在左）才不受影響。 */
+  .shell > main{order:1}
+  aside.past{order:2; position:static; padding:28px 0 60px;
+    margin-top:20px; border-top:1px solid var(--rule)}
 }
 
 .flag{border-bottom:3px double var(--rule); background:var(--card)}
@@ -134,13 +137,13 @@ footer p{margin:0 0 .55em; max-width:66ch}
 <div class="stand"><div class="wrap"><p>本週最有料的一則貼文有 8 個讚。同期全站最高的 32,101 讚是一則迷因。在量化這個題材上，互動數是反指標——本報改用「給不給得出可驗證的數字」來挑內容。</p></div></div>
 
 <div class="shell">
+  <aside class="past"><h2>往期</h2><ol><li class="on"><a href="issues/2026-08-25.html"><time>2026-08-25</time><span>時序動量：三段驗證，其中一段把它打回隨機</span></a></li></ol><p class="note">共 1 期</p></aside>
   <main>
     <section class="lead"><span class="kick">頭條</span><h2 class="hed">時序動量：三段驗證，其中一段把它打回隨機</h2><div class="body"><p>@myo.qt 依「Time-series momentum: Is it there?」做了一組驗證，難得的是三段結果都給了完整區間，包含失敗的那一段。</p><p>純止損架構：年化 10–13%、Sharpe 0.5–0.6、回撤 −45~49%。他自己的評語是「粗暴一點講就是拿著大盤但多受一點罪」。</p><p>加上「挑強勢標的 × 強勢時段」之後跳到年化 25–66%、Sharpe 1.0–1.6，而且回撤反而變淺（−37~41%）——報酬與風險同時改善，這是值得留意的環節。</p><p>但把進場改成 55 日突破，整組打回年化 8.67–11.93%、Sharpe 0.46–0.57。</p></div><blockquote class="pull"><p>55 日突破進場把它打回 8.67–11.93%，Sharpe 0.46–0.57——跟純隨機沒有差別。</p></blockquote><div class="src"><a href="https://www.threads.com/@myo.qt/post/DcTWxWNFMLK" target="_blank" rel="noopener"><b>@myo.qt</b><span>純止損架構是年化 10–13%、Sharpe 0.5–0.6</span><i>8 讚 · 1 回</i></a></div></section>
     <h2 class="bar"><span>今日重點</span><span>4 則</span></h2><div class="points"><div class="pt"><div class="n">01</div><div><h3>一張績效圖缺了這六個數字就不必看</h3><p>@super_trader_hk 拆解一張宣稱 AI 自主選點的績效圖：勝率近 90%、每日 43 筆、累計約 4,000 筆、獲利 58 萬美元、資金曲線一路右上。他指出真正的問題不是「AI」，而是圖上完全看不到最大回撤、獲利因子、Sharpe、平均盈虧比、交易成本、樣本外結果。</p><p>並給了驗證順序：Train → Validation → 完全未見過的 Out-of-Sample → Walk-forward → Live forward test。他的判斷是「模型自由度越高、參數越多，就越容易變成 AI 學到歷史答案而非市場規律」。</p><div class="src"><a href="https://www.threads.com/@super_trader_hk/post/DcLHymGGBGh" target="_blank" rel="noopener"><b>@super_trader_hk</b><span>係 curve fitting / overfitting。</span><i>1 讚 · 1 回</i></a></div></div></div><div class="pt"><div class="n">02</div><div><h3>+10,835% 的另一面：回撤七成，實盤三十日持平</h3><p>@hudson_algo_trade 拆一組 AMD 插針策略：從七十年代跑到現在、勝率 82.65%（362 勝 / 438 筆）、獲利因子 3.253——最大回撤同時標到七成。</p><p>三個問題點得很準：半世紀只測一檔已知會大漲的標的，曲線天然好看；勝率高但回撤深，通常代表虧損時不砍倉硬扛；而「插針」策略依賴 TradingView「K 線最低點碰到就算成交」的假設，極端行情下流動性瞬間消失，掛最低點的實際成交率很低。</p><p>作者把策略上架讓人對照，各標的三十日表現大多持平或不到 1% 正報酬。</p><div class="src"><a href="https://www.threads.com/@hudson_algo_trade/post/DcbKKrBkqnV" target="_blank" rel="noopener"><b>@hudson_algo_trade</b><span>剛刷到一組AMD插針策略回測，曲線看起來真的很漂亮。 從七十</span><i>1 讚 · 0 回</i></a></div></div></div><div class="pt"><div class="n">03</div><div><h3>把 0.02 點記進帳的人</h3><p>@mirrorlu2002 貼白銀交易紀錄：累計 −0.51 點，五次已平倉，手續費加滑價每次 0.02 點，扣完是 −0.63 點，再換算成 10 倍槓桿 −9.6%、5 倍槓桿 −4.8%。</p><p>整則沒有任何觀點，就是一張帳。但這是本週唯一一則把摩擦成本實際扣進去、並且換算到槓桿後報酬的紀錄——上面兩則講的「回測沒算成本」，這則示範了算進去長什麼樣。</p><div class="src"><a href="https://www.threads.com/@mirrorlu2002/post/DcN-0mOk9aN" target="_blank" rel="noopener"><b>@mirrorlu2002</b><span>白銀交易紀錄 累計 -0.51點 8/19多單成本63.14</span><i>0 讚 · 0 回</i></a></div></div></div><div class="pt"><div class="n">04</div><div><h3>宏觀：AI 企業債正在跟財政部搶同一個資金池</h3><p>@z12723211 引達拉斯聯準會測算：3,000 億美元的 AI 企業債形成的久期供給，相當於美債久期供給的八分之一；AI 債殖利率比同期限美債高出 115 個基點以上，機構在賣美債、買 AI 債。</p><p>他的推論是這會反噬 AI 大廠自己——長端殖利率上行讓 DCF 分母變大，成長股估值被壓縮。對做長天期部位或利率敏感策略的人，這是需要盯的變數。</p><div class="src"><a href="https://www.threads.com/@z12723211/post/DcQjYl8jwR3" target="_blank" rel="noopener"><b>@z12723211</b><span>過去，科技巨頭是資本市場的現金淨供給方。現在，它們成了最瘋狂</span><i>9 讚 · 0 回</i></a></div></div></div></div>
     <div class="desk"><h3>編輯台註記</h3><p>本報不依互動數排序，因為在這個題材上它是反指標。實測 9,807 筆語料：互動前 100 名裡，命中任何深度訊號的是 0 筆——爆文是散戶喊單與 AI 生成的個股分析模板。改用具體性評分（績效數值、交易成本、程式碼、具體參數、研究引用等）之後，近七天有 6 則達標，而本週頭條只有 8 個讚。同期也排除了兩類形式上很「具體」但無可操作資訊的文類：AI 個股分析模板（42 則），以及對主管機關的政策質詢文。</p></div>
     <h2 class="bar"><span>討論現場</span><span>1 區</span></h2><section class="sec"><h3>本週唯一高互動又有實質的一則</h3><p class="intro">@lecvho 的火雞寓言拿到 296 讚，是這批深度內容裡互動最高的。農夫每月餵一次，火雞第 5 個月寫下「月月正報酬，勝率 100%」，第 6 個月做了 Excel 回測「夏普比率完美」，第 11 個月出書。第 12 個月是感恩節。</p><blockquote class="qt"><p>牠最後的遺言是：「這不可能，我回測過了。」</p><cite>— @lecvho</cite></blockquote><div class="src"><a href="https://www.threads.com/@lecvho/post/DcXrekJE7zq" target="_blank" rel="noopener"><b>@lecvho</b><span>我會請每個人都看過這則故事 有一隻火雞，從出生開始，農夫每個</span><i>296 讚 · 8 回</i></a></div></section>
   </main>
-  <aside class="past"><h2>往期</h2><ol><li class="on"><a href="issues/2026-08-25.html"><time>2026-08-25</time><span>時序動量：三段驗證，其中一段把它打回隨機</span></a></li></ol><p class="note">共 1 期</p></aside>
 </div>
 
 <footer><div class="wrap">
