@@ -162,6 +162,22 @@ h2.bar{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.2
 .keyn .fg{margin:0; padding:0; background:none; border:none}
 .keyn .stat b{font-size:clamp(1.6rem,5vw,2.15rem); color:var(--red-ink)}
 
+/* ---- 延伸研究 -----------------------------------------------------------
+   跟其他區塊視覺上要分得開——它不是「今天發生了什麼」，是「你可以去做什麼」。
+   用左邊的粗線標示，跟重點區的編號欄形成對比。 */
+.rsnote{margin:-6px 0 22px; font-size:.86rem; line-height:1.7; color:var(--ink-3)}
+.rss{display:flex; flex-direction:column; gap:30px}
+.rs{padding-left:16px; border-left:3px solid var(--deep)}
+.rs h3{font-family:"Noto Serif TC",Georgia,serif; font-size:1.08rem;
+  margin:0 0 8px; line-height:1.5}
+.rs p{margin:0 0 .6em; color:var(--ink-2); font-size:.97rem}
+.rs p strong{font-weight:600; color:var(--ink)}
+.try{margin:12px 0 0!important; padding:11px 14px; background:var(--tint);
+  border-radius:4px; font-size:.93rem!important; color:var(--ink)!important}
+.try span{display:block; font-family:"IBM Plex Mono",monospace; font-size:.64rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--red-ink);
+  margin-bottom:5px}
+
 /* ---- 表格 --------------------------------------------------------------- */
 .tw{overflow-x:auto}
 .tw table{border-collapse:collapse; width:100%; font-size:.92rem}
