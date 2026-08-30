@@ -103,6 +103,76 @@ h2.bar{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.2
    700 沒載，指定 bold 會被瀏覽器合成成糊掉的假粗體）。 */
 .lead .body strong,.pt p strong{font-weight:600; color:var(--ink)}
 
+/* ---- 一句話結論 ---------------------------------------------------------
+   放在標題之後、內文之前。用左邊的紅線與較大的字把它跟內文分開，
+   讓只讀標題的人也會不小心讀到它。 */
+.tldr{margin:0 0 14px; padding:0 0 0 13px; border-left:2px solid var(--red);
+  font-family:"Noto Serif TC",Georgia,serif; font-size:1.02rem; line-height:1.7;
+  color:var(--ink); text-wrap:pretty}
+.tldr strong{font-weight:700}
+
+/* ---- 圖表 ---------------------------------------------------------------
+   SVG 由 figures.py 產生，顏色全走 CSS 變數，所以深淺色主題自動跟著換。
+   width:100% + viewBox 讓它在手機上等比縮小，不需要另外寫斷點。 */
+.fg{margin:0 0 18px; padding:16px 18px 14px; background:var(--card);
+  border:1px solid var(--rule); border-radius:5px}
+.figt{margin:0 0 12px; font-family:"IBM Plex Mono",monospace; font-size:.68rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3)}
+.fig{display:block; width:100%; height:auto; overflow:visible}
+.fg figcaption{margin-top:10px; font-size:.8rem; line-height:1.6; color:var(--ink-3)}
+
+/* SVG 內的文字。字體要明寫——SVG 不會從 body 繼承 font-family。 */
+.fig text{font-family:"Noto Sans TC","PingFang TC",system-ui,sans-serif;
+  fill:var(--ink-2); font-size:13px}
+.fig .bl{text-anchor:end; fill:var(--ink-2); font-size:13px}
+.fig .bn{font-family:"IBM Plex Mono",monospace; font-size:13px; font-weight:500;
+  fill:var(--ink-2); font-variant-numeric:tabular-nums}
+.fig .bn.hi{fill:var(--red-ink); font-weight:600}
+.fig .bt{fill:var(--tint)}
+.fig .bv{fill:var(--ink-3)}
+.fig .bv.hi{fill:var(--red)}
+.fig .ax{stroke:var(--rule); stroke-width:1}
+.fig .ay{text-anchor:end; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  fill:var(--ink-3); font-variant-numeric:tabular-nums}
+.fig .ln{fill:none; stroke:var(--ink-3); stroke-width:2;
+  stroke-linejoin:round; stroke-linecap:round}
+.fig .dot{fill:var(--ink-3)}
+.fig .dot.hi{fill:var(--red)}
+.fig .dn{text-anchor:middle; font-family:"IBM Plex Mono",monospace; font-size:12px;
+  fill:var(--ink-3); font-variant-numeric:tabular-nums}
+.fig .dn.hi{fill:var(--red-ink); font-weight:600}
+.fig .dx{text-anchor:middle; font-size:12px; fill:var(--ink-3)}
+
+/* ---- 大字數字 ----------------------------------------------------------- */
+.stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(120px,1fr)); gap:18px}
+.stat b{display:block; font-family:"IBM Plex Mono",monospace;
+  font-size:clamp(1.5rem,4.5vw,1.95rem); font-weight:600; line-height:1.15;
+  color:var(--ink); font-variant-numeric:tabular-nums; letter-spacing:-.01em}
+.stat b i{font-style:normal; font-size:.58em; font-weight:500;
+  color:var(--ink-3); margin-left:2px}
+.stat span{display:block; margin-top:5px; font-size:.84rem; line-height:1.5;
+  color:var(--ink-2)}
+.stat em{display:block; margin-top:2px; font-style:normal; font-size:.76rem;
+  color:var(--ink-3)}
+
+/* 報頭下方那排今日數字。用底色跟導言區分開，但不加框——
+   它是報頭的延伸，不是一個獨立的卡片。 */
+.keyn{background:var(--card); border-bottom:1px solid var(--rule)}
+.keyn .wrap{padding:22px 24px}
+.keyn .fg{margin:0; padding:0; background:none; border:none}
+.keyn .stat b{font-size:clamp(1.6rem,5vw,2.15rem); color:var(--red-ink)}
+
+/* ---- 表格 --------------------------------------------------------------- */
+.tw{overflow-x:auto}
+.tw table{border-collapse:collapse; width:100%; font-size:.92rem}
+.tw th,.tw td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--rule)}
+.tw th{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); font-weight:500;
+  border-bottom:1px solid var(--ink-3)}
+.tw td{color:var(--ink-2); font-variant-numeric:tabular-nums}
+.tw td.hi{color:var(--red-ink); font-weight:600}
+.tw tr:last-child td{border-bottom:none}
+
 .src{margin-top:11px; display:flex; flex-direction:column; gap:7px}
 .src a{display:flex; align-items:baseline; gap:9px; text-decoration:none;
   font-family:"IBM Plex Mono",monospace; font-size:.76rem; color:var(--ink-3);
@@ -170,6 +240,13 @@ footer p{margin:0 0 .55em; max-width:66ch}
   .src i{margin-left:0; order:3; flex:1 1 100%; font-size:.7rem}
 
   .desk{padding:16px 18px; margin-bottom:36px}
+  /* 小螢幕上圖表的內距要收，但 SVG 本身靠 viewBox 自動縮放，不用改。
+     今日數字改成兩欄——四欄擠在 375px 上每欄只剩 80px，數字會折行。 */
+  .fg{padding:13px 14px 11px}
+  .keyn .wrap{padding:18px 16px}
+  .keyn .stats{grid-template-columns:repeat(2,1fr); gap:14px}
+  .tldr{font-size:.98rem; padding-left:11px}
+  .tw th,.tw td{padding:8px 10px}
   .sec{margin-bottom:30px}
   .qt{padding-left:12px}
 
@@ -195,6 +272,7 @@ footer p{margin:0 0 .55em; max-width:66ch}
 </div></header>
 
 <div class="stand"><div class="wrap"><p>30 年期美債殖利率上到 5.34%，是 2007 年以來最高。財政部把回購規模翻倍、市場傳出可能動用 9,500 億美元的 TGA——但殖利率彈回來了。本週的討論集中在同一個問題：這些工具到底在解決什麼。</p></div></div>
+
 
 <div class="shell">
   <aside class="past"><h2>往期</h2><ol><li><a href="../issues/2026-08-30.html"><time>2026-08-30</time><span>動到市場的不是轉鷹，是「金融條件不算緊」這一句</span></a></li><li><a href="../issues/2026-08-29.html"><time>2026-08-29</time><span>降息 50 個基點，殖利率反而上升 30 個基點</span></a></li><li><a href="../issues/2026-08-28.html"><time>2026-08-28</time><span>回測 +10,835%，實盤三十天大多持平</span></a></li><li><a href="../issues/2026-08-27.html"><time>2026-08-27</time><span>1946 年那次，債務從 106% 降到 23%，靠的不是成長</span></a></li><li><a href="../issues/2026-08-26.html"><time>2026-08-26</time><span>六個商品的樣本外體檢：五個回歸原始模型</span></a></li><li class="on"><a href="../issues/2026-08-25.html"><time>2026-08-25</time><span>回購救得了流動性，救不了定價</span></a></li></ol><p class="note">共 6 期</p></aside>
